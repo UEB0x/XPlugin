@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-#
+# 2018.05.21
 
 import os, sys
 import getopt
@@ -27,7 +27,7 @@ def myreplace(root, src, dst):
         return
 
     for i in os.listdir(root):
-        if i in ['.', '..', '.git']: continue
+        if i in ['.', '..', '.git', 'rename.py', 'README.md']: continue
 
         path = os.path.join(root,i)
         if os.path.isfile(path) and not os.path.isdir(path):
@@ -77,15 +77,19 @@ def get_curr_path():
     return os.path.dirname(os.path.realpath(__file__))
 
 def main(name):
+
     plugin_name_src = 'XPlugin'
     plugin_name_dst = name
 
-    root = get_curr_path()
+    curr_plugin_path = get_curr_path()
+    new_plugin_path = os.path.join(curr_plugin_path, '..', plugin_name_dst)
 
-    myrename(root, plugin_name_src, plugin_name_dst)
-    myreplace(root, plugin_name_src, plugin_name_dst)
+    myrename(curr_plugin_path, plugin_name_src, plugin_name_dst)
 
-    rename(root, join(repo_root, '..', plugin_name_dst))
+    myreplace(curr_plugin_path, plugin_name_src, plugin_name_dst)
+    myreplace(curr_plugin_path, plugin_name_src.upper(), plugin_name_dst.upper())
+
+    rename(curr_plugin_path, new_plugin_path)
 
 if __name__ == '__main__':
     try:
