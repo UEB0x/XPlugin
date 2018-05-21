@@ -84,12 +84,16 @@ def main(name):
     curr_plugin_path = get_curr_path()
     new_plugin_path = os.path.join(curr_plugin_path, '..', plugin_name_dst)
 
+    cmd = 'cp -v ' + os.path.join(curr_plugin_path, 'build.sh') + ' ' + os.path.join(curr_plugin_path, '..', '..')
+    run(cmd)
+
     myrename(curr_plugin_path, plugin_name_src, plugin_name_dst)
 
     myreplace(curr_plugin_path, plugin_name_src, plugin_name_dst)
     myreplace(curr_plugin_path, plugin_name_src.upper(), plugin_name_dst.upper())
 
     rename(curr_plugin_path, new_plugin_path)
+
 
 if __name__ == '__main__':
     try:
